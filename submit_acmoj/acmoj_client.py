@@ -64,8 +64,12 @@ class ACMOJClient:
 
         except requests.exceptions.RequestException as e:
             print(f"API Request failed: {e}")
-            if 'response' in locals() and response:
+            try:
+                # Attempt to show server-provided error details
+                print(f"Response status: {response.status_code}")
                 print(f"Response text: {response.text}")
+            except Exception:
+                pass
             return None
 
     def _save_submission_id(self, submission_id):
